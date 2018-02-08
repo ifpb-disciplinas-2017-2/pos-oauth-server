@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>br.edu.ifpb</groupId>
-    <artifactId>rest-server</artifactId>
+    <artifactId>pos-oauth</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>rest-server</name>
+    <name>pos-oauth</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -24,6 +24,7 @@
     </dependencies>
 
     <build>
+        <finalName>pos-oauth</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

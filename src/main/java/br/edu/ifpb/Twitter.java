@@ -63,9 +63,8 @@ public class Twitter extends HttpServlet {
         Response time = timelineTarget.request().accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", headerAuthorization)
                 .get();
-        JsonArray readEntity = time.readEntity(JsonArray.class);
-        System.out.println(readEntity.getJsonObject(0));
-//        
+//        JsonArray readEntity = time.readEntity(JsonArray.class);
+//        System.out.println(readEntity.getJsonObject(0));        
 
         Map<String, String> map = new HashMap<>();
         map.put("status", "enviandoooooo");
@@ -82,15 +81,15 @@ public class Twitter extends HttpServlet {
                 "https://api.twitter.com/1.1/statuses/update.json",
                 pairs);
 
-        Form forma = new Form(new MultivaluedHashMap<>(map));
+        Form status = new Form(new MultivaluedHashMap<>(map));
 
         WebTarget updateTarget = builder.target("https://api.twitter.com/1.1/statuses/update.json");
         Response update = updateTarget.request().accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", headerAuthorization)
-                .post(Entity.form(forma));
+                .post(Entity.form(status));
 
-        JsonObject ent = update.readEntity(JsonObject.class);
-        System.out.println(ent);
+//        JsonObject ent = update.readEntity(JsonObject.class);
+//        System.out.println(ent);
 
     }
 }

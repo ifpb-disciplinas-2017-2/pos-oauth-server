@@ -37,24 +37,16 @@ public class TwitterAutenticate {
         String oauthSignatureMethod = "HMAC-SHA1";
         String oauthTimestamp = Long.toString(System.currentTimeMillis() / 1000);
         String oauthNonce = "pos12desdfedrfedwsderd" + oauthTimestamp;
-//        String oauthToken = ("".equals(token.trim())) ? "" : "&oauth_token=" + token;
-
-//        String parameters = "oauth_consumer_key=" + consumerKey
-//                + "&oauth_nonce=" + oauthNonce
-//                + "&oauth_signature_method=" + oauthSignatureMethod
-//                + "&oauth_timestamp=" + oauthTimestamp
-//                + oauthToken
-//                + "&oauth_version=1.0"
-//                + "&status=" + encode("enviando..");
+        
         List<Pair> allParams = new ArrayList<>();
         allParams.add(Pair.create("oauth_consumer_key", consumerKey));
         allParams.add(Pair.create("oauth_nonce", oauthNonce));
         allParams.add(Pair.create("oauth_signature_method", oauthSignatureMethod));
         allParams.add(Pair.create("oauth_timestamp", oauthTimestamp));
         allParams.add(Pair.create("oauth_version", "1.0"));
+        
         if (!"".equals(token.trim())) {
             allParams.add(Pair.create("oauth_token", token));
-            System.out.println("token:" + token);
         }
 
         allParams.addAll(params);
@@ -71,6 +63,7 @@ public class TwitterAutenticate {
         try {
             oauthSignature = computeSignature(signatureBase, composite);
         } catch (GeneralSecurityException | UnsupportedEncodingException e) {
+            // TODO throw new RuntimeExpection(); 
             e.printStackTrace();
         }
         String oauthToken = ("".equals(token.trim())) ? "" : "\", oauth_token=\"" + token;

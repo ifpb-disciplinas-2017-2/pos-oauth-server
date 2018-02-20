@@ -22,20 +22,19 @@ import javax.ws.rs.core.Response;
 public class ClientTwitter {
 
     public static void main(String[] args) throws IOException {
-        Client newBuilder = ClientBuilder.newBuilder().build();
-        WebTarget target = newBuilder.target("https://api.twitter.com/oauth/request_token");
-//        String authorization = new TwitterAutenticate
-//                .headerAuthorization("POST", "https://api.twitter.com/oauth/request_token",
-//                        "", "");
         Credentials c = new Credentials("", "");
         AuthenticatorOfTwitter authenticator = new AuthenticatorOfTwitter(c);
         EndpointInTwitter endpoint = new EndpointInTwitter("POST", "https://api.twitter.com/oauth/request_token");
         String authorization = authenticator.in(endpoint).authenticate();
-        
         System.out.println("authorization = " + authorization);
+        
+        Client newBuilder = ClientBuilder.newBuilder().build();
+        WebTarget target = newBuilder.target("https://api.twitter.com/oauth/request_token"); 
+
         Response post = target.request().accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", authorization)
                 .post(Entity.json(""));
+        
         String oauth_token = post.readEntity(String.class);
         System.out.println("readObject = " + oauth_token);
 

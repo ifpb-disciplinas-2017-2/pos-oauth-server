@@ -40,7 +40,11 @@ public class Twitter extends HttpServlet {
         String token = access_token.split("&")[0].split("=")[1];
         String verifier = access_token.split("&")[1].split("=")[1];
         Credentials credentialsAuthenticated = new Credentials(token, verifier);
-        readTimeline(credentialsAuthenticated, builder);
+
+        request.getSession().setAttribute("token", credentialsAuthenticated);
+        response.sendRedirect("http://localhost:8080/pos-oauth/faces/timeline.xhtml");
+
+//        readTimeline(credentialsAuthenticated, builder);
 //        updateTimeline(credentialsAuthenticated, builder);
     }
 
@@ -62,7 +66,7 @@ public class Twitter extends HttpServlet {
         AuthenticatorOfTwitter authenticator = new AuthenticatorOfTwitter(c);
         EndpointInTwitter endpoint = new EndpointInTwitter("GET", "https://api.twitter.com/1.1/statuses/user_timeline.json");
         String headerAuthorization = authenticator.in(endpoint).authenticate();
-        
+
         WebTarget timelineTarget = builder.target("https://api.twitter.com/1.1/statuses/user_timeline.json");
         Response time = timelineTarget.request().accept(MediaType.APPLICATION_JSON)
                 .header("Authorization", headerAuthorization)
@@ -73,8 +77,8 @@ public class Twitter extends HttpServlet {
 
     private void updateTimeline(Credentials credentials, Client builder) {
         Map<String, String> map = new HashMap<>();
-        map.put("status", "segundo exemplo..");
-        
+        map.put("status", "exemplo em aula com @JoeNihon :)");
+
         AuthenticatorOfTwitter authenticator = new AuthenticatorOfTwitter(credentials);
         EndpointInTwitter endpoint = new EndpointInTwitter("POST", "https://api.twitter.com/1.1/statuses/update.json");
         String headerAuthorization = authenticator.in(endpoint).authenticate(map);
